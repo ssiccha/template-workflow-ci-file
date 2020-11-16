@@ -7,8 +7,7 @@ CI_file_location=${1}
 repo_name=${2}
 repo_full_name=${3}
 echo "Working on repository "${repo_name}
-# Do everything in RAM
-cd /tmp
+cd /home/sergio/projects/gap-actions
 mkdir -p ___create-action-prs/
 cd ___create-action-prs/
 # Get the repo. If the gap-packages/package repo is itself a fork, then this
