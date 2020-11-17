@@ -11,8 +11,14 @@ echo "Working on repository "${repo_name}
 cd /home/sergio/projects/gap-actions
 mkdir -p ___create-action-prs/
 cd ___create-action-prs/
-# Get the repo. If the owner_login/repo_name repo is itself a fork, then this
-# command prompts for which repo should be the target of PRs etc.
+# Get the repo. If a folder for the repo already exists we assume that we
+# already opened the PR.
+if [ -d ${repo_name} ]; then
+    echo "Repo ${repo_name} was already cloned."
+    exit 0
+fi
+# Note: If the owner_login/repo_name repo is itself a fork,
+# then this command prompts for which repo should be the target of PRs etc.
 gh repo fork ${repo_full_name} --clone --remote=false
 cd ${repo_name}
 git switch -c "ss/add-GitHub-actions-for-package-tests"
