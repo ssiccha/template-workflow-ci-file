@@ -77,7 +77,14 @@ This PR contains four commits which do:
 - adds a CI action badge to the README.md, if it found none, and
 - removes the travis CI badge from the README.md, if it finds one.
 
-Since this PR is generated automatically, please double-check that the last three commits do not break anything. You may also have to specify values for the variables `GAP_PKGS_TO_BUILD` and `GAP_PKGS_TO_CLONE` in the `.github/workflows/CI.yml` file as described further below.
+Since this PR is generated automatically, before merging it:
+
+HERE-DOC
+)
+body+="- Go to ${inspect_action_results_url} and confirm that the tests passed."
+body+=$(cat <<'HERE-DOC'
+  You may have to specify values for the variables `GAP_PKGS_TO_BUILD` and `GAP_PKGS_TO_CLONE` in the `.github/workflows/CI.yml` file as described further below.
+- Double-check that the last three commits do not break anything.
 
 The added GitHub action `CI` contains a job `test`, which runs your package's tests using the same scripts as previously did Travis, namely those from
 https://github.com/gap-system/pkg-ci-scripts
