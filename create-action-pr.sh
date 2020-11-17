@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-if [ $# -ne 3 ]; then
-    echo -n "Usage: create-action-pr.sh <CI_file_location> <repo_name>"
-    echo " <repo_full_name>"
+if [ $# -ne 2 -a $# -ne 3 ]; then
+    echo -n "Usage: create-action-pr.sh <owner_login> <repo_name>"
+    echo " [CI_file_location]"
 fi
-CI_file_location=${1}
+owner_login=${1}
 repo_name=${2}
-repo_full_name=${3}
+CI_file_location=${3-'/home/sergio/projects/gap-actions/template-workflow-ci-file/CI.yml'}
+repo_full_name="${owner_login}/${repo_name}"
 echo "Working on repository "${repo_name}
 cd /home/sergio/projects/gap-actions
 mkdir -p ___create-action-prs/
 cd ___create-action-prs/
-# Get the repo. If the gap-packages/package repo is itself a fork, then this
+# Get the repo. If the owner_login/repo_name repo is itself a fork, then this
 # command prompts for which repo should be the target of PRs etc.
 gh repo fork ${repo_full_name} --clone --remote=false
 cd ${repo_name}
@@ -33,9 +34,9 @@ else
     echo "No .travis.yml found."
 fi
 # The CI action badge
-CI_badge_string='[![Build Status](https://github.com/gap-packages/'
+CI_badge_string='[![Build Status](https://github.com/'"${owner_login}"'/'
 CI_badge_string+=${repo_name}
-CI_badge_string+='/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/'
+CI_badge_string+='/workflows/CI/badge.svg?branch=master)](https://github.com/'"${owner_login}"'/'
 CI_badge_string+=${repo_name}
 CI_badge_string+='/actions?query=workflow%3ACI+branch%3Amaster)'
 if [ -f README.md ]; then
@@ -122,6 +123,3 @@ https://github.com/gap-actions
 HERE-DOC
 )
 gh pr create --title "Add GitHub action for CI tests" --body "${body}"
-# Clean up afterwards
-cd ..
-rm -rf ${repo_name}

@@ -16,5 +16,5 @@ with open(repos2, mode='r') as packages_file:
     table = table + json.load(packages_file)
 
 entry = table[0]
-subprocess.check_call('./create-action-pr.sh', CI_file_location,
-                      entry['name'], entry['full_name'])
+subprocess.check_call('./create-action-pr.sh', entry['owner']['login'],
+                      entry['name'],  CI_file_location)
