@@ -5,10 +5,9 @@ if [ $# -ne 2 -a $# -ne 3 ]; then
 fi
 owner_login=${1}
 repo_name=${2}
-CI_file_location=${3-'/home/sergio/projects/gap-actions/template-workflow-ci-file/CI.yml'}
+CI_file_location=${3-'CI.yml'}
 repo_full_name="${owner_login}/${repo_name}"
 echo "Working on repository "${repo_name}
-cd /home/sergio/projects/gap-actions
 mkdir -p ___create-action-prs/
 cd ___create-action-prs/
 # Get the repo. If a folder for the repo already exists we assume that we
