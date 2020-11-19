@@ -84,6 +84,7 @@ body+="- Go to ${inspect_action_results_url} and confirm that the tests passed."
 body+=$(cat <<'HERE-DOC'
   You may have to specify values for the variables `GAP_PKGS_TO_BUILD` and `GAP_PKGS_TO_CLONE` in the `.github/workflows/CI.yml` file as described further below.
 - Double-check that the last three commits do not break anything.
+- Eventually add tests that were in the `.travis.yml` but are missing in the `.github/workflows/CI.yml`.
 
 The added GitHub action `CI` contains a job `test`, which runs your package's tests using the same scripts as previously did Travis, namely those from
 https://github.com/gap-system/pkg-ci-scripts
@@ -112,7 +113,7 @@ If you need to clone the development version of packages set the input `GAP_PKGS
 
 Notice that you may also have to set inputs for the action `gap-actions/setup-gap-for-packages@v1` in the job `manual`.
 
-If you want to adjust which tests are run have a look at the [documentation of the job matrix](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix).
+If you want to adjust which tests are run have a look at the [documentation of the job matrix](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix), especially also at [how to use the `include:` keyword](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#example-including-additional-values-into-combinations)
 
 HERE-DOC
 )
