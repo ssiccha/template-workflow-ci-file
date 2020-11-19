@@ -15,4 +15,4 @@ with open(repos2, mode='r') as packages_file:
 # TODO make this into a for loop
 entry = table[0]
 subprocess.check_call('./create-action-pr.sh', entry['owner']['login'],
-                      entry['name'],  CI_file_location)
+                      entry['name'])
