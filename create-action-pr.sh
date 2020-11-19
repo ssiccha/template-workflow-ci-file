@@ -67,7 +67,6 @@ export inspect_action_results_url="https://github.com/ssiccha/${repo_name}/actio
 body=$(cat <<HERE-DOC
 This PR configures GitHub Actions to run the package tests. It was created by a script. You can view the results of the added GitHub action at:
 ${inspect_action_results_url}
-\n
 HERE-DOC
 )
 body+=$(cat <<'HERE-DOC'
@@ -78,10 +77,9 @@ This PR contains four commits which do:
 - removes the travis CI badge from the README.md, if it finds one.
 
 Since this PR is generated automatically, before merging it:
-\n
 HERE-DOC
 )
-body+="- Go to ${inspect_action_results_url} and confirm that the tests passed."
+body+="\n- Go to ${inspect_action_results_url} and confirm that the tests passed."
 body+=$(cat <<'HERE-DOC'
   You may have to specify values for the variables `GAP_PKGS_TO_BUILD` and `GAP_PKGS_TO_CLONE` in the `.github/workflows/CI.yml` file as described further below.
 - Double-check that the last three commits do not break anything.
@@ -119,7 +117,7 @@ If you want to adjust which tests are run have a look at the [documentation of t
 HERE-DOC
 )
 body+=$(cat <<HERE-DOC
-\nYou can add changes to this PR by adding my fork as a remote, checking it out and then committing and pushing as follows:
+You can add changes to this PR by adding my fork as a remote, checking it out and then committing and pushing, which should work roughly as follows:
 \`\`\`
 git remote add ssiccha https://github.com/ssiccha/${repo_name}
 git checkout ss/add-GitHub-actions-for-package-tests
