@@ -20,6 +20,8 @@ fi
 # then this command prompts for which repo should be the target of PRs etc.
 gh repo fork ${repo_full_name} --clone --remote=false
 cd ${repo_name}
+git switch "master"
+git reset --hard upstream/master
 git switch -c "ss/add-GitHub-actions-for-package-tests"
 # Add the CI action yaml file
 if [ ! -f .github/workflows/CI.yml ]; then
@@ -60,16 +62,15 @@ if [ -f README.md ]; then
 else
     echo "No README.md found."
 fi
-git push --set-upstream origin ss/add-GitHub-actions-for-package-tests
+git push -f --set-upstream origin ss/add-GitHub-actions-for-package-tests
 export inspect_action_results_url="https://github.com/ssiccha/${repo_name}/actions"
 body=$(cat <<HERE-DOC
 This PR configures GitHub Actions to run the package tests. It was created by a script. You can view the results of the added GitHub action at:
 ${inspect_action_results_url}
-
+\n
 HERE-DOC
 )
 body+=$(cat <<'HERE-DOC'
-
 This PR contains four commits which do:
 - adds a file `.github/workflows/CI.yml` which configures GitHub Actions to run the package tests,
 - removes the `.travis.yml` file if it exists in the package,
@@ -77,7 +78,7 @@ This PR contains four commits which do:
 - removes the travis CI badge from the README.md, if it finds one.
 
 Since this PR is generated automatically, before merging it:
-
+\n
 HERE-DOC
 )
 body+="- Go to ${inspect_action_results_url} and confirm that the tests passed."
@@ -113,12 +114,12 @@ If you need to clone the development version of packages set the input `GAP_PKGS
 
 Notice that you may also have to set inputs for the action `gap-actions/setup-gap-for-packages@v1` in the job `manual`.
 
-If you want to adjust which tests are run have a look at the [documentation of the job matrix](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix), especially also at [how to use the `include:` keyword](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#example-including-additional-values-into-combinations)
+If you want to adjust which tests are run have a look at the [documentation of the job matrix](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix), especially also at [how to use the `include:` keyword](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#example-including-additional-values-into-combinations).
 
 HERE-DOC
 )
 body+=$(cat <<HERE-DOC
-You can add changes to this PR by adding my fork as a remote, checking it out and then committing and pushing as follows:
+\nYou can add changes to this PR by adding my fork as a remote, checking it out and then committing and pushing as follows:
 \`\`\`
 git remote add ssiccha https://github.com/ssiccha/${repo_name}
 git checkout ss/add-GitHub-actions-for-package-tests
