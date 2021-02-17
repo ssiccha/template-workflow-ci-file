@@ -41,7 +41,7 @@ else
     echo "No .travis.yml found."
 fi
 # The CI action badge
-CI_badge_string='[![CI](https://github.com/'"${owner_login}"'/'"${repo_name}"'/workflows/CI/badge.svg)](https://github.com/'"${owner_login}"'/'"${repo_name}"'/actions?query=workflow%3ACI+branch%3Amaster)'
+CI_badge_string='[![CI](https://github.com/'"${owner_login}"'/'"${repo_name}"'/workflows/CI/badge.svg?branch=master)](https://github.com/'"${owner_login}"'/'"${repo_name}"'/actions?query=workflow%3ACI+branch%3Amaster)'
 if [ -f README.md ]; then
     # Add action badge if it does not exist already
     if [ -z "$(grep -F "${CI_badge_string}" README.md)" ]; then
